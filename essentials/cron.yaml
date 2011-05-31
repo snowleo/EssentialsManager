@@ -1,0 +1,7 @@
+cron:
+- description: update tickets
+  url: /cron/tickets
+  schedule: every 30 minutes
+- description: update builds
+  url: /cron/builds
+  schedule: every 30 minutes

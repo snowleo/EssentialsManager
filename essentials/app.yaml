@@ -1,0 +1,24 @@
+application: essentialsmanager 
+version: 4
+runtime: python
+api_version: 1
+
+builtins:
+- deferred: on
+
+handlers:
+- url: /favicon.ico
+  static_files: images/favicon.ico
+  upload: images/favicon.ico
+- url: /css
+  static_dir: css
+- url: /images
+  static_dir: images
+- url: /check.*
+  script: check.py
+- url: /cron/.*
+  script: cron.py
+  login: admin
+- url: .*
+  script: main.py
+

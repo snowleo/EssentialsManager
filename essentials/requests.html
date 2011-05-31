@@ -1,0 +1,62 @@
+<h1>
+    Feature Requests
+</h1>
+<p>
+    You can request new features at our ticket system <a href="https://www.assembla.com/spaces/essentials/tickets">Assembla</a>.
+</p>
+{% if notloggedin %}
+<p>
+    You can vote to for feature requests if you login.
+    <a href="{{notloggedin}}">Login using Google</a>
+</p>
+{% else %}
+
+{% for ticket in requests %}
+<div class="ui-tabs ui-widget ui-widget-content">
+    <div>
+        <a href="https://www.assembla.com/spaces/essentials/tickets/{{ticket.number}}" target="_blank" class="assemblalinks">#{{ticket.number}}: {{ticket.summary|striptags}}</a>
+        <span style="float: right" class="votegroup">
+            <a href="/down?id={{ticket.number}}" class="buttonminus">-</a>
+            <a href="/neutral?id={{ticket.number}}" class="buttonneutral">{{ticket.votes}}</a>
+            <a href="/up?id={{ticket.number}}" class="buttonplus">+</a>
+        </span>
+    </div>
+    <div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+        {{ticket.description|striptags|truncatewords:50|linebreaks}}
+    </div>
+</div>
+{% endfor%}
+{% endif %}
+
+<script>
+$(function() {
+    window.setTimeout(function() {
+    $('.assemblalinks').button();
+    $('.votegroup').buttonset().children().bind('click',function(event){
+        event.preventDefault();
+        var button = $(this);
+        $.get(this.href,{},function(response){
+            button.parent().children('.buttonneutral').children('.ui-button-text').text(response);
+        });
+    });
+    $('.buttonminus').button({
+        icons: {
+            primary: "ui-icon-minusthick"
+        },
+        text: false
+    });
+    $('.buttonneutral').button({
+        icons: {
+            primary: "ui-icon-heart"
+        }
+    });
+    $('.buttonplus').button({
+        icons: {
+            primary: "ui-icon-plusthick"
+        },
+        text: false
+    });
+    }, 0);
+});
+</script>
+

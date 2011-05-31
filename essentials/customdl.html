@@ -1,0 +1,132 @@
+<h1>Customized Download</h1>
+<div id="accordion">
+    <h3><a href="#section1">Build</a></h3>
+	<div>
+	    <div id="radio">
+        		<input type="radio" id="radio1" name="radio" /><label for="radio1">Developer Build</label>
+        		<input type="radio" id="radio2" name="radio" checked="checked" /><label for="radio2">Release Build</label>
+        </div>
+        <p>
+            On normal servers, you want to use the release build. Use the developer build only for testing.
+        </p>
+	</div>
+	<h3><a href="#section2">Modules</a></h3>
+	<div>
+		<table>
+		    {% for module in modules %}
+		    <tr>
+		        <td>
+		            <input type="checkbox" id="{{ module.id }}" value="1"/><label for="{{ module.id }}">{{ module.name }}</label>
+		        </td>
+		        <td>
+		            {{ module.description }}
+		        </td>
+		        {% if admin %}
+		        <td>
+		            <a href="/deletemodule?id={{ module.id|urlencode }}" class="delete">Delete</a>
+		        </td>
+		        {% endif  %}
+		    </tr>
+		    {% endfor %}
+		    {% if admin %}
+		    <tr>
+		        <td>
+		            <input type="text" id="new" value="" />
+		        </td>
+		        <td>
+		            {{ module.description }}
+		        </td>
+		        {% if admin %}
+		        <td>
+		            <a href="/deletemodule?id={{ module.id|urlencode }}" class="delete">Delete</a>
+		        </td>
+		        {% endif %}
+		    </tr>
+		    {% endif %}
+		</table>
+	</div>
+	<h3><a href="#section3">Remove Commands</a></h3>
+	<div>
+		Prevent problems with other plugins by removing commands here:
+		<table>
+		    {% for command in commands %}
+		    <tr>
+		        <td>
+		            <input type="checkbox" id="{{ command.command }}" value="1"/><label for="{{ command.command }}">{{ command.command }}</label>
+		        </td>
+		        <td>
+		            {{ command.usage|escape }}<br/>
+		            {{ command.description }}
+		        </td>
+		        
+		    </tr>
+		    {% endfor %}
+		</table>
+	</div>
+	<h3><a href="#section4">Customized default config</a></h3>
+	<div>
+		<p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui. </p>
+		<ul>
+			<li>List item</li>
+			<li>List item</li>
+			<li>List item</li>
+			<li>List item</li>
+			<li>List item</li>
+			<li>List item</li>
+			<li>List item</li>
+		</ul>
+		<a href="#othercontent">Link to other content</a>
+	</div>
+</div>
+<script>
+$(function() {
+	$( "#accordion" ).accordion({
+		autoHeight: false,
+		navigation: true
+	});
+	$(':checkbox').attr('checked', true).button({
+                icons: {
+                    primary: "ui-icon-check"
+                }}).change(
+                    function() {
+                        if ($(this).attr('checked')) {
+                            $(this).button({
+                                        icons: {
+                                            primary: "ui-icon-check"
+                                        }});
+                        } else {
+                            $(this).button({
+                                        icons: {
+                                            primary: "ui-icon-bullet"
+                                        }});
+                        }
+                        
+                    }
+                );
+    $('.delete').button().bind('click',function(event){
+        event.preventDefault();
+        $.get(this.href,{},function(response){ });
+    });
+    $( "#radio" ).buttonset();
+    $(":radio").button({
+        icons: {
+            primary: "ui-icon-bullet"
+        }});
+    $(":radio:checked").button({
+        icons: {
+            primary: "ui-icon-check"
+        }});
+    $(":radio").change(
+        function() {
+            $(":radio").button({
+                icons: {
+                    primary: "ui-icon-bullet"
+                }});
+            $(":radio:checked").button({
+                icons: {
+                    primary: "ui-icon-check"
+                }});
+        }
+    );
+});
+</script>

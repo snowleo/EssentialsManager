@@ -1,0 +1,15 @@
+<h1>Direct Download</h1>
+<h3>Stable Release Versions</h3>
+<ul>
+{% for release in stableversions %}
+<li>Version <b>{{ release.major }}.{{ release.minor }}.{{ release.build }}</b> for CraftBukkit Build <b>{{ release.bukkit }}</b>: <a href="{{ release.url }}">Download</a> {{ release.date }} <a href="{{ release.changelog }}">Changelog</a>
+{% endfor %}
+</ul>
+
+<h3>Development Release Versions</h3>
+Use these versions for testing only and at your own risk.
+<ul>
+{% for release in devversions %}
+<li>Version <b>Dev{{ release.major }}.{{ release.minor }}.{{ release.build }}</b> for CraftBukkit Build <b>{{ release.bukkit }}</b>: <a href="{{ release.url }}">Download</a> {{ release.date }} <a href="{{ release.changelog }}">Changelog</a>
+{% endfor %}
+</ul>
